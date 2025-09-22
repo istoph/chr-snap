@@ -1,0 +1,96 @@
+name: chr
+base: core24
+version: "0.80.1"
+license: BSL-1.0
+website:
+  - https://github.com/istoph/editor
+summary: terminal-based text editor - chr
+description: |
+  Keyboard shortcuts are similar to the default editors in Gnome, KDE and other desktop environments. This is to ease workflows alternating between GUIs and terminal.
+
+  The look and feel is a blend of modern GUI editors and late 90s PC text mode editors (e.g. Turbo Vision based or edit.com) adapted to fit into terminal based workflows.
+
+  It has been written from scratch using Tui Widget
+
+grade: stable
+confinement: strict
+
+apps:
+  chr:
+    command: usr/bin/chr
+    plugs:
+      - home
+
+parts:
+  termpaint:
+    plugin: meson
+    source: https://github.com/termpaint/termpaint.git
+    meson-parameters:
+      - -Dprefix=/usr
+#      - -Dtests=false #releas 0.3.2
+    build-packages:
+      - build-essential
+      - git
+      - meson
+      - ninja-build
+      - pkg-config
+
+  tuiwidgets:
+    after: [termpaint]
+    plugin: meson
+    source: https://github.com/tuiwidgets/tuiwidgets.git
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Dtests=false
+    build-environment:
+      - PKG_CONFIG_PATH: >
+          ${CRAFT_STAGE}/usr/lib/${CRAFT_ARCH_TRIPLET}/pkgconfig:
+          ${CRAFT_STAGE}/usr/lib/pkgconfig:
+          ${CRAFT_STAGE}/usr/share/pkgconfig
+      - LD_LIBRARY_PATH: >
+          ${CRAFT_STAGE}/usr/lib/${CRAFT_ARCH_TRIPLET}:
+          ${CRAFT_STAGE}/usr/lib
+    build-packages:
+      - build-essential
+      - git
+      - meson
+      - ninja-build
+      - pkg-config
+      - qtbase5-dev
+      - qttools5-dev
+      - qt5-qmake
+    stage-packages:
+      - libqt5core5a
+
+  chr:
+    after: [tuiwidgets]
+    plugin: meson
+    source: https://github.com/istoph/editor.git
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Dsyntax_highlighting=true
+      - -Dversion=0.80.1~snap
+      - -Dtests=false
+    build-environment:
+      - PKG_CONFIG_PATH: >
+          ${CRAFT_STAGE}/usr/lib/${CRAFT_ARCH_TRIPLET}/pkgconfig:
+          ${CRAFT_STAGE}/usr/lib/pkgconfig:
+          ${CRAFT_STAGE}/usr/share/pkgconfig
+      - LD_LIBRARY_PATH: >
+          ${CRAFT_STAGE}/usr/lib/${CRAFT_ARCH_TRIPLET}:
+          ${CRAFT_STAGE}/usr/lib
+    build-packages:
+      - build-essential
+      - git
+      - meson
+      - ninja-build
+      - pkg-config
+      - qtbase5-dev
+      - qttools5-dev
+      - qt5-qmake
+      - libkf5syntaxhighlighting-dev
+      - cmake
+    stage-packages:
+      - libqt5core5a
+      - libkf5syntaxhighlighting5
+
