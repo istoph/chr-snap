@@ -1,9 +1,10 @@
 name: chr
 base: core24
-version: "0.80.1"
+version: "0.80.2"
 license: BSL-1.0
 website:
   - https://github.com/istoph/editor
+  - https://github.com/istoph/chr-snap
 summary: terminal-based text editor - chr
 description: |
   Keyboard shortcuts are similar to the default editors in Gnome, KDE and other desktop environments. This is to ease workflows alternating between GUIs and terminal.
@@ -13,7 +14,7 @@ description: |
   It has been written from scratch using Tui Widget
 
 grade: stable
-confinement: strict
+confinement: classic
 
 apps:
   chr:
@@ -27,7 +28,7 @@ parts:
     source: https://github.com/termpaint/termpaint.git
     meson-parameters:
       - -Dprefix=/usr
-#      - -Dtests=false #releas 0.3.2
+      - -Dtests=false
     build-packages:
       - build-essential
       - git
@@ -69,7 +70,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dsyntax_highlighting=true
-      - -Dversion=0.80.1~snap
+      - -Dversion=0.80.2~snap
       - -Dtests=false
     build-environment:
       - PKG_CONFIG_PATH: >
