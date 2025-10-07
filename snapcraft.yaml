@@ -19,6 +19,8 @@ confinement: classic
 apps:
   chr:
     command: usr/bin/chr
+    environment:
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/x86_64-linux-gnu"
     plugs:
       - home
 
