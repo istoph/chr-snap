@@ -48,6 +48,7 @@ parts:
       - meson
       - ninja-build
       - pkg-config
+      - musl-tools
 
   tuiwidgets:
     after: [termpaint]
