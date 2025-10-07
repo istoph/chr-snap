@@ -1,6 +1,6 @@
 name: chr
 base: core24
-version: "0.80.3"
+version: "0.80.4"
 license: BSL-1.0
 contact:
   - chr@istoph.de
@@ -31,7 +31,7 @@ apps:
   chr:
     command: usr/bin/chr
     environment:
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/x86_64-linux-gnu"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET}"
     plugs:
       - home
 
@@ -83,7 +83,7 @@ parts:
     meson-parameters:
       - -Dprefix=/usr
       - -Dsyntax_highlighting=true
-      - -Dversion=0.80.3~snap
+      - -Dversion=0.80.4~snap
       - -Dtests=false
     build-environment:
       - PKG_CONFIG_PATH: >
